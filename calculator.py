@@ -1,54 +1,38 @@
-def add(x, y):
-    return x + y
+import pytest
+from calculator import add, subtract, multiply, divide, integer_divide, modulo
 
-def subtract(x, y):
-    return x - y
+def test_add():
+    assert add(3, 5) == 8
+    assert add(-1, 1) == 0
+    assert add(0, 0) == 0
 
-def multiply(x, y):
-    return x * y
+def test_subtract():
+    assert subtract(10, 7) == 3
+    assert subtract(-1, 1) == -2
+    assert subtract(5, 5) == 0
 
-def divide(x, y):
-    if y == 0:
-        return "На нуль ділити не можна!"
-    else:
-        return x / y
+def test_multiply():
+    assert multiply(3, 5) == 15
+    assert multiply(-2, 4) == -8
+    assert multiply(0, 10) == 0
 
-def integer_divide(x, y):
-    if y == 0:
-        return "На нуль ділити не можна!"
-    else:
-        return x // y
+def test_divide():
+    assert divide(10, 5) == 2.0
+    assert divide(7, 3) == pytest.approx(2.3333, 0.001)
+    assert divide(-10, 2) == -5.0
+    with pytest.raises(ZeroDivisionError):
+        divide(5, 0)
 
-def modulo(x, y):
-    if y == 0:
-        return "На нуль ділити не можна!"
-    else:
-        return x % y
+def test_integer_divide():
+    assert integer_divide(10, 3) == 3
+    assert integer_divide(7, 3) == 2
+    assert integer_divide(-10, 3) == -4
+    with pytest.raises(ZeroDivisionError):
+        integer_divide(5, 0)
 
-print("Виберіть операцію:")
-print("1. Додавання")
-print("2. Віднімання")
-print("3. Множення")
-print("4. Ділення")
-print("5. Цілочисельне ділення")
-print("6. Остача від цілочисельного ділення")
-
-choice = input("Введіть номер операції (1/2/3/4/5/6): ")
-
-num1 = float(input("Введіть перше число: "))
-num2 = float(input("Введіть друге число: "))
-
-if choice == '1':
-    print("Результат:", add(num1, num2))
-elif choice == '2':
-    print("Результат:", subtract(num1, num2))
-elif choice == '3':
-    print("Результат:", multiply(num1, num2))
-elif choice == '4':
-    print("Результат:", divide(num1, num2))
-elif choice == '5':
-    print("Результат:", integer_divide(num1, num2))
-elif choice == '6':
-    print("Результат:", modulo(num1, num2))
-else:
-    print("Некоректний вибір операції")
+def test_modulo():
+    assert modulo(10, 3) == 1
+    assert modulo(7, 3) == 1
+    assert modulo(-10, 3) == 2
+    with pytest.raises(ZeroDivisionError):
+        modulo(5, 0)
